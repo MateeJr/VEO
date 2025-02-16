@@ -1,4 +1,4 @@
-name = "scira"
+name = "veo"
 main = ".next/server/app/api/trending/route.js"
 compatibility_date = "2024-02-16"
 
