@@ -9,7 +9,7 @@
         "bom1"
     ],
     "functions": {
-        "app/api/chat/route.ts": {
+        "app/api/*/route.ts": {
             "maxDuration": 60
         }
     }
