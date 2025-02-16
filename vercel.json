@@ -9,6 +9,9 @@
         "bom1"
     ],
     "functions": {
+        "app/api/**/*.ts": {
+            "maxDuration": 60
+        },
         "app/api/**/route.ts": {
             "maxDuration": 60
         },
@@ -20,6 +23,9 @@
         },
         "pages/**/*": {
             "maxDuration": 60
-                }
+        },
+        "src/**/*": {
+            "maxDuration": 60
+        }
     }
 }
