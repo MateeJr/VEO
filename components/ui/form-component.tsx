@@ -8,7 +8,7 @@ import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card"
 import useWindowSize from '@/hooks/use-window-size';
-import { X } from 'lucide-react';
+import { X, Sparkles } from 'lucide-react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -29,40 +29,20 @@ interface ModelSwitcherProps {
     messages: Array<Message>;
 }
 
-const XAIIcon = ({ className }: { className?: string }) => (
-    <svg 
-        width="440" 
-        height="483" 
-        viewBox="0 0 440 483" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-        className={className}
-    >
-        <path d="M356.09 155.99L364.4 482.36H430.96L439.28 37.18L356.09 155.99Z" fill="currentColor"/>
-        <path d="M439.28 0.910004H337.72L178.35 228.53L229.13 301.05L439.28 0.910004Z" fill="currentColor"/>
-        <path d="M0.609985 482.36H102.17L152.96 409.84L102.17 337.31L0.609985 482.36Z" fill="currentColor"/>
-        <path d="M0.609985 155.99L229.13 482.36H330.69L102.17 155.99H0.609985Z" fill="currentColor"/>
-    </svg>
-);
+interface Model {
+    value: string;
+    label: string;
+    icon: string;
+    iconClass: string;
+    description: string;
+    color: string;
+    vision: boolean;
+    experimental: boolean;
+    category: string;
+}
 
-const AnthropicIcon = ({ className }: { className?: string }) => (
-    <svg 
-        role="img" 
-        viewBox="0 0 24 24" 
-        xmlns="http://www.w3.org/2000/svg"
-        className={className}
-    >
-        <title>Anthropic</title>
-        <path fill="currentColor" d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/>
-    </svg>
-);
-
-const models = [
-    { value: "scira-default", label: "Grok 2.0", icon: XAIIcon, iconClass: "!text-neutral-300", description: "xAI's Grok 2.0 model", color: "glossyblack", vision: false, experimental: false, category: "Stable" },
-    { value: "scira-grok-vision", label: "Grok 2.0 Vision", icon: XAIIcon, iconClass: "!text-neutral-300", description: "xAI's Grok 2.0 Vision model", color: "steel", vision: true, experimental: false, category: "Stable" },
-    { value: "scira-sonnet", label: "Claude 3.5 Sonnet", icon: AnthropicIcon, iconClass: "!text-neutral-900 dark:!text-white", description: "Anthropic's G.O.A.T. model", color: "purple", vision: true, experimental: false, category: "Stable" },
-    { value: "scira-llama", label: "Llama 3.3 70B", icon: "/cerebras.png", iconClass: "!text-neutral-900 dark:!text-white", description: "Meta's Llama model by Cerebras", color: "offgray", vision: false, experimental: true, category: "Experimental" },
-    { value: "scira-r1", label: "DeepSeek R1 Distilled", icon: "/groq.svg", iconClass: "!text-neutral-900 dark:!text-white", description: "DeepSeek R1 model by Groq", color: "sapphire", vision: false, experimental: true, category: "Experimental" },
+const models: Model[] = [
+    { value: "scira-default", label: "Veo 1.0", icon: "/google.svg", iconClass: "!text-neutral-900 dark:!text-white", description: "Most Capable Veo Model", color: "blue", vision: true, experimental: false, category: "Models" },
 ];
 
 const getColorClasses = (color: string, isSelected: boolean = false) => {
@@ -128,7 +108,7 @@ const ModelSwitcher: React.FC<ModelSwitcherProps> = ({ selectedModel, setSelecte
 
     // Only show divider if we have multiple categories and no attachments
     const showDivider = (category: string) => {
-        return !hasAttachments && showExperimentalModels && category === "Stable";
+        return !hasAttachments && showExperimentalModels && category === "Models";
     };
 
     return (
@@ -144,23 +124,14 @@ const ModelSwitcher: React.FC<ModelSwitcherProps> = ({ selectedModel, setSelecte
                 )}
             >
                 {selectedModelData && (
-                    typeof selectedModelData.icon === 'string' ? (
-                        <img 
-                            src={selectedModelData.icon} 
-                            alt={selectedModelData.label}
-                            className={cn(
-                                "w-3.5 h-3.5 object-contain",
-                                selectedModelData.iconClass
-                            )}
-                        />
-                    ) : (
-                        <selectedModelData.icon 
-                            className={cn(
-                                "w-3.5 h-3.5",
-                                selectedModelData.iconClass
-                            )}
-                        />
-                    )
+                    <img 
+                        src={selectedModelData.icon} 
+                        alt={selectedModelData.label}
+                        className={cn(
+                            "w-3.5 h-3.5 object-contain",
+                            selectedModelData.iconClass
+                        )}
+                    />
                 )}
                 <span className="hidden sm:block text-xs font-medium overflow-hidden">
                     <TextMorph
@@ -214,23 +185,14 @@ const ModelSwitcher: React.FC<ModelSwitcherProps> = ({ selectedModel, setSelecte
                                             : "bg-black/5 dark:bg-white/5",
                                         "group-hover:bg-black/10 dark:group-hover:bg-white/10"
                                     )}>
-                                        {typeof model.icon === 'string' ? (
-                                            <img 
-                                                src={model.icon}
-                                                alt={model.label}
-                                                className={cn(
-                                                    "w-3 h-3 object-contain",
-                                                    model.iconClass
-                                                )}
-                                            />
-                                        ) : (
-                                            <model.icon 
-                                                className={cn(
-                                                    "w-3 h-3",
-                                                    model.iconClass
-                                                )}
-                                            />
-                                        )}
+                                        <img 
+                                            src={model.icon}
+                                            alt={model.label}
+                                            className={cn(
+                                                "w-3 h-3 object-contain",
+                                                model.iconClass
+                                            )}
+                                        />
                                     </div>
                                     <div className="flex flex-col gap-px min-w-0">
                                         <div className="font-medium truncate">{model.label}</div>
@@ -951,8 +913,8 @@ const FormComponent: React.FC<FormComponentProps> = ({
                 )}
             </AnimatePresence>
 
-            <input type="file" className="hidden" ref={fileInputRef} multiple onChange={handleFileChange} accept="image/*" tabIndex={-1} />
-            <input type="file" className="hidden" ref={postSubmitFileInputRef} multiple onChange={handleFileChange} accept="image/*" tabIndex={-1} />
+            <input type="file" className="hidden" ref={fileInputRef} multiple onChange={handleFileChange} accept="image/png,image/jpeg,image/webp,image/heic,image/heif" tabIndex={-1} />
+            <input type="file" className="hidden" ref={postSubmitFileInputRef} multiple onChange={handleFileChange} accept="image/png,image/jpeg,image/webp,image/heic,image/heif" tabIndex={-1} />
 
             {(attachments.length > 0 || uploadQueue.length > 0) && (
                 <div className="flex flex-row gap-2 overflow-x-auto py-2 max-h-32 z-10 px-1">
@@ -1056,8 +1018,8 @@ const FormComponent: React.FC<FormComponentProps> = ({
                                     (hasSubmitted && selectedGroup === 'extreme') && "opacity-50 cursor-not-allowed hover:shadow-none"
                                 )}
                             >
-                                <Mountain className="h-3.5 w-3.5" />
-                                <span className="text-xs font-medium">Extreme</span>
+                                <Sparkles className="h-3.5 w-3.5" />
+                                <span className="text-xs font-medium">Deep Research</span>
                             </button>
                         )}
                     </div>

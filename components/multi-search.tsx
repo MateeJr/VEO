@@ -96,7 +96,7 @@ const SearchLoadingState = ({
                             </div>
                             <div className="flex-1">
                                 <div className="flex items-center gap-3">
-                                    <h2 className="font-semibold text-left">Running Web Search</h2>
+                                    <h2 className="font-semibold text-left">Searching the Web</h2>
                                     {completedQueries < queries.length && (
                                         <div className="flex gap-1">
                                             {[...Array(3)].map((_, i) => (
