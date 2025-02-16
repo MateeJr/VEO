@@ -5,6 +5,7 @@ import { xai } from '@ai-sdk/xai';
 import { cerebras } from '@ai-sdk/cerebras';
 import { anthropic } from '@ai-sdk/anthropic'
 import { groq } from '@ai-sdk/groq'
+import { google } from '@ai-sdk/google'
 import CodeInterpreter from '@e2b/code-interpreter';
 import FirecrawlApp from '@mendable/firecrawl-js';
 import { tavily } from '@tavily/core';
@@ -24,7 +25,9 @@ import { z } from 'zod';
 
 const scira = customProvider({
     languageModels: {
-        'scira-default': xai('grok-2-1212'),
+        'scira-default': google('gemini-2.0-flash'),
+        'scira-gemini-vision': google('gemini-2.0-flash-vision'),
+        'scira-grok': xai('grok-2-1212'),
         'scira-grok-vision': xai('grok-2-vision-1212'),
         'scira-llama': cerebras('llama-3.3-70b'),
         'scira-sonnet': anthropic('claude-3-5-sonnet-20241022'),
@@ -1359,6 +1362,10 @@ export async function POST(req: Request) {
                                         - 4-12 targeted search queries (each can use web, academic, or both sources)
                                         - 2-8 key analyses to perform
                                         - Prioritize the most important aspects to investigate
+                                        
+                                        For each search query and analysis:
+                                        - Priority/Importance must be an integer from 1 to 5 (1 = lowest, 5 = highest)
+                                        - Do not use decimal values
                                         
                                         Consider different angles and potential controversies, but maintain focus on the core aspects.
                                         Ensure the total number of steps (searches + analyses) does not exceed 20.`

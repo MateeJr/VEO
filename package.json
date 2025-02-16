@@ -20,6 +20,7 @@
     "@ai-sdk/xai": "^1.1.0",
     "@e2b/code-interpreter": "^1.0.3",
     "@foobar404/wave": "^2.0.5",
+    "@google/generative-ai": "^0.21.0",
     "@mendable/firecrawl-js": "^1.16.0",
     "@openrouter/ai-sdk-provider": "^0.0.6",
     "@phosphor-icons/react": "^2.1.7",
@@ -96,7 +97,7 @@
     "unist-util-visit": "^5.0.0",
     "vaul": "^1.1.1",
     "ws": "^8.18.0",
-    "zod": "^3.24.1"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/google.maps": "^3.55.12",
@@ -112,5 +113,21 @@
     "postcss": ">=8.4.31",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
-  }
+  },
+  "description": "![Scira](/app/opengraph-image.png)",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaidmukaddam/scira.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaidmukaddam/scira/issues"
+  },
+  "homepage": "https://github.com/zaidmukaddam/scira#readme"
 }

@@ -117,7 +117,8 @@ import { ReasoningUIPart, ToolInvocationUIPart, TextUIPart } from '@ai-sdk/ui-ut
 import {
     Dialog,
     DialogContent,
-    DialogTrigger,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
 import {
     Drawer,
@@ -1211,6 +1212,55 @@ const HomeContent = () => {
         );
     };
 
+    const ChangelogButton = () => {
+        const [open, setOpen] = useState(false);
+        
+        return (
+            <>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setOpen(true)}
+                    className="rounded-full w-8 h-8 bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all"
+                >
+                    <Info className="h-5 w-5 text-neutral-600 dark:text-neutral-400" />
+                </Button>
+                
+                <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogContent className="sm:max-w-[600px]">
+                        <DialogHeader>
+                            <DialogTitle className="text-2xl font-bold tracking-tight">Changelog</DialogTitle>
+                            <p className="text-sm text-muted-foreground mt-2">
+                                Track our journey and latest improvements
+                            </p>
+                        </DialogHeader>
+                        <div className="space-y-6 max-h-[70vh] overflow-y-auto px-1">
+                            <div className="space-y-4">
+                                <div className="border-l-4 border-primary pl-4 space-y-2">
+                                    <div className="flex items-center gap-2">
+                                        <span className="font-semibold text-lg">VEO 1.0 Release</span>
+                                        <span className="px-2 py-1 rounded-full bg-primary/10 text-primary text-xs">
+                                            BETA EXPERIMENTAL
+                                        </span>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">
+                                        February 17, 2025
+                                    </p>
+                                    <ul className="list-disc list-inside text-sm space-y-1 text-muted-foreground">
+                                        <li>AI Chatbot for all your questions</li>
+                                        <li>Deep Research with Extremely Detailed Answers</li>
+                                        <li>Successor of Vnyl</li>
+                                        <li>Developed by Vallian Sayoga</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            </>
+        );
+    };
+
     interface NavbarProps { }
 
     const Navbar: React.FC<NavbarProps> = () => {
@@ -1227,7 +1277,7 @@ const HomeContent = () => {
                             variant={'secondary'}
                             className="rounded-full bg-accent hover:bg-accent/80 backdrop-blur-sm group transition-all hover:scale-105 pointer-events-auto"
                         >
-                            <Plus size={18} className="group-hover:rotate-90 transition-all" />
+                            <Plus size={18} className="group-hover:scale-110 transition-all" />
                             <span className="text-sm ml-2 group-hover:block hidden animate-in fade-in duration-300">
                                 New
                             </span>
@@ -1235,19 +1285,7 @@ const HomeContent = () => {
                     </Link>
                 </div>
                 <div className='flex items-center space-x-4'>
-                    <Link
-                        target="_blank"
-                        href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fzaidmukaddam%2Fscira&env=XAI_API_KEY,AZURE_RESOURCE_NAME,AZURE_API_KEY,OPENAI_API_KEY,ANTHROPIC_API_KEY,CEREBRAS_API_KEY,GROQ_API_KEY,E2B_API_KEY,UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,ELEVENLABS_API_KEY,TAVILY_API_KEY,EXA_API_KEY,TMDB_API_KEY,YT_ENDPOINT,FIRECRAWL_API_KEY,OPENWEATHER_API_KEY,SANDBOX_TEMPLATE_ID,GOOGLE_MAPS_API_KEY,MAPBOX_ACCESS_TOKEN,TRIPADVISOR_API_KEY,AVIATION_STACK_API_KEY,CRON_SECRET,BLOB_READ_WRITE_TOKEN,NEXT_PUBLIC_MAPBOX_TOKEN,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,NEXT_PUBLIC_GOOGLE_MAPS_API_KEY&envDescription=API%20keys%20and%20configuration%20required%20for%20Scira%20to%20function"
-                        className="flex flex-row gap-2 items-center py-1.5 px-2 rounded-md 
-                            bg-accent hover:bg-accent/80
-                            backdrop-blur-sm text-foreground shadow-sm text-sm
-                            transition-all duration-200"
-                    >
-                        <VercelIcon size={14} />
-                        <span className='hidden sm:block'>Deploy with Vercel</span>
-                        <span className='sm:hidden block'>Deploy</span>
-                    </Link>
-                    <AboutButton />
+                    <ChangelogButton />
                     <ThemeToggle />
                 </div>
             </div>
@@ -1278,10 +1316,10 @@ const HomeContent = () => {
                 }
 
                 if (timestamp - lastScrollTime.current > 16) {
-                    const newScrollLeft = scrollRef.current.scrollLeft + 1;
+                    const newScrollLeft = scrollRef.current.scrollLeft - 1;
 
-                    if (newScrollLeft >= scrollRef.current.scrollWidth - scrollRef.current.clientWidth) {
-                        scrollRef.current.scrollLeft = 0;
+                    if (newScrollLeft <= 0) {
+                        scrollRef.current.scrollLeft = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
                     } else {
                         scrollRef.current.scrollLeft = newScrollLeft;
                     }
@@ -1578,7 +1616,7 @@ const HomeContent = () => {
                     {!hasSubmitted && (
                         <div className="text-center !font-sans">
                             <h1 className="text-2xl sm:text-4xl mb-6 text-neutral-800 dark:text-neutral-100 font-syne">
-                                What do you want to explore?
+                                Veo - Ask Anything.
                             </h1>
                         </div>
                     )}
@@ -1780,24 +1818,24 @@ const HomeContent = () => {
                 </AnimatePresence>
                 {!hasSubmitted && (
                     <footer
-                        className="flex flex-row justify-between items-center bottom-3 w-full fixed p-4 sm:p-auto"
+                        className="flex flex-col justify-center items-center bottom-0 w-full fixed p-4 sm:p-auto z-50"
                     >
-                        <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                            © {new Date().getFullYear()} All rights reserved.
+                        <div className="text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+                            Developed by Vallian Sayoga | All rights reserved © {new Date().getFullYear()}
                         </div>
                         <TooltipProvider>
                             <div className="flex items-center gap-4">
                                 <TooltipButton
-                                    href="https://peerlist.io/zaidmukaddam"
-                                    tooltip="Follow on Peerlist"
+                                    href="https://wa.me/6285172196650"
+                                    tooltip="Chat on WhatsApp"
                                 >
-                                    <PeerlistLogo />
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.827z"/><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.031 18.75c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/></svg>
                                 </TooltipButton>
                                 <TooltipButton
-                                    href="https://x.com/zaidmukaddam"
-                                    tooltip="Follow on X"
+                                    href="https://instagram.com/professional_idiot_25"
+                                    tooltip="Follow on Instagram"
                                 >
-                                    <XLogo className='size-5' />
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                                 </TooltipButton>
                             </div>
                         </TooltipProvider>

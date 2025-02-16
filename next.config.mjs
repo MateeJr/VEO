@@ -62,41 +62,24 @@ const nextConfig = {
                 port: '',
                 pathname: "**"
             },
-            // upload.wikimedia.org
             {
                 protocol: 'https',
                 hostname: 'upload.wikimedia.org',
                 port: '',
                 pathname: '**'
             },
-            // media.theresanaiforthat.com
             {
                 protocol: 'https',
                 hostname: 'media.theresanaiforthat.com',
                 port: '',
                 pathname: '**'
             },
-            // www.uneed.best
             {
                 protocol: 'https',
                 hostname: 'www.uneed.best',
                 port: '',
                 pathname: '**'
-            },
-            // image.tmdb.org
-            {
-                protocol: 'https',
-                hostname: 'image.tmdb.org',
-                port: '',
-                pathname: '/t/p/original/**'
-            },
-            // image.tmdb.org
-            {
-                protocol: 'https',
-                hostname: 'image.tmdb.org',
-                port: '',
-                pathname: '/**'
-            },
+            }
         ]
     },
 };

@@ -2,6 +2,7 @@ import { xai } from '@ai-sdk/xai';
 import { generateObject } from 'ai';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { google } from '@ai-sdk/google';
 
 export interface TrendingQuery {
     icon: string;
@@ -52,7 +53,7 @@ async function fetchGoogleTrends(): Promise<TrendingQuery[]> {
             const itemsWithCategoryAndIcon = await Promise.all(
                 items.map(async (item) => {
                     const { object } = await generateObject({
-                        model: xai("grok-beta"),
+                        model: google("gemini-2.0-flash"),
                         prompt: `Give the category for the topic from the existing values only in lowercase only: ${item.replace(
                             /<\/?title>/g,
                             '',
@@ -134,17 +135,17 @@ export async function GET(req: Request) {
             return NextResponse.json([
                 {
                     icon: 'sparkles',
-                    text: 'What causes the Northern Lights?',
+                    text: 'Why human have only ten fingers?',
                     category: 'science',
                 },
                 {
                     icon: 'code',
-                    text: 'Explain quantum computing',
+                    text: 'Generate HTML Code of Google Look-alike website',
                     category: 'tech',
                 },
                 {
                     icon: 'globe',
-                    text: 'Most beautiful places in Japan',
+                    text: 'Safest country in the world',
                     category: 'travel',
                 },
             ]);
