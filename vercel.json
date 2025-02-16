@@ -9,7 +9,16 @@
         "bom1"
     ],
     "functions": {
-        "app/api/*/route.ts": {
+        "/api/chat": {
+            "maxDuration": 60
+        },
+        "/api/clean_images": {
+            "maxDuration": 60
+        },
+        "/api/trending": {
+            "maxDuration": 60
+        },
+        "/api/upload": {
             "maxDuration": 60
         }
     }
