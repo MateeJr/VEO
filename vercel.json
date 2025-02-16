@@ -20,9 +20,6 @@
         },
         "pages/**/*": {
             "maxDuration": 60
-        },
-        "src/**/*": {
-            "maxDuration": 60
-        }
+                }
     }
 }
