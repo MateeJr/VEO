@@ -8,8 +8,20 @@
     "regions": [
         "bom1"
     ],
-        "functions": {
-        "app/api/**/*.ts": {
+    "functions": {
+        "app/api/**/route.ts": {
+            "maxDuration": 60
+        },
+        "pages/api/**/*.ts": {
+            "maxDuration": 60
+        },
+        "app/**/*": {
+            "maxDuration": 60
+        },
+        "pages/**/*": {
+            "maxDuration": 60
+        },
+        "src/**/*": {
             "maxDuration": 60
         }
     }
